@@ -3,9 +3,6 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const app = express();
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -27,11 +24,11 @@ connection.connect((err) => {
     res.sendFile(__dirname + '/index.html');
   });
   
-  // Handle form submission
+  // // Handle form submission
   app.post('/signup', (req, res) => {
     const { username, password } = req.body;
   
-    // Insert the new user into the database
+  //   // Insert the new user into the database
     const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
     connection.query(query, [username, password], (err, results) => {
       if (err) {
