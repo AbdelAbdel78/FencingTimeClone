@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Main from './components/main';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const App = () => {
 	const [fencers, setFencers] = useState([]);
@@ -15,16 +18,20 @@ const App = () => {
 	}, []);
 
 	return (
-		<div>
-			<h1>Fencerss</h1>
+		<>
+			<Header />
+			<Main />
+			<Footer />
+
+			<h1>Fencers</h1>
 			<ul>
 				{fencers.map(fencer => (
 					<li key={fencer.memberID}>
-						{fencer.firstName} - {fencer.lastName}
+						{fencer.lastName}, {fencer.firstName}
 					</li>
 				))}
 			</ul>
-		</div>
+		</>
 	);
 };
 
