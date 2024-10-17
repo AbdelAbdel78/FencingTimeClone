@@ -33,8 +33,18 @@ app.get("/api/fencers", (req, res) => {
 	});
 });
 
-app.get("api/events", (req, res) => {
+app.get("/api/events", (req, res) => {
 	query = "SELECT * FROM events";
+	db.query(query, (err, results) => {
+		if (err) {
+			return res.status(500).json({ error: err });
+		}
+		res.json(results);
+	})
+});
+
+app.get("/api/competedin", (req, res) => {
+	query = "SELECT * FROM competedin, events, fencers WHERE competedin.eID = events.eventID AND competedin.mID = fencers.memberID";
 	db.query(query, (err, results) => {
 		if (err) {
 			return res.status(500).json({ error: err });
