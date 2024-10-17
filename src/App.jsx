@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 
 const App = () => {
 	const [fencers, setFencers] = useState([]);
+	const [events, setEvents] = useState([]);
 
 	useEffect(() => {
 		axios.get('http://localhost:5000/api/fencers')
@@ -15,7 +16,17 @@ const App = () => {
 			.catch(error => {
 				console.error('Error fetching data:', error);
 			});
-	}, []);
+	}, [fencers]);
+
+	useEffect(() => {
+		axios.get('http://localhost:5000/api/events')
+			.then(response => {
+				setEvents(response.data);
+			})
+			.catch(error => {
+				console.error('Error fetching data:', error);
+			})
+	}, [events]);
 
 	return (
 		<>

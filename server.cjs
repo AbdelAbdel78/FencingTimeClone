@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+var query;
 
 const app = express();
 app.use(cors());
@@ -23,13 +24,23 @@ db.connect((err) => {
 
 // Define a simple API to fetch users
 app.get("/api/fencers", (req, res) => {
-	const query = "SELECT * FROM fencers";
+	query = "SELECT * FROM fencers";
 	db.query(query, (err, results) => {
 		if (err) {
 			return res.status(500).json({ error: err });
 		}
 		res.json(results);
 	});
+});
+
+app.get("api/events", (req, res) => {
+	query = "SELECT * FROM events";
+	db.query(query, (err, results) => {
+		if (err) {
+			return res.status(500).json({ error: err });
+		}
+		res.json(results);
+	})
 });
 
 const PORT = 5000;
