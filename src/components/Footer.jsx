@@ -2,9 +2,9 @@
 
 function Footer() {
     return (
-        <div>
+        <footer>
             Footer
-        </div>
+        </footer>
     )
 }
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import Main from './components/main';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Home from './components/Home';
+import Fencers from './components/Fencers';
+import Events from './components/Events';
 
-const App = () => {
+const AppRouter = () => {
 	const [fencers, setFencers] = useState([]);
 	const [events, setEvents] = useState([]);
 	const [competedIn, setCompetedIn] = useState([]);
@@ -40,39 +41,33 @@ const App = () => {
 	}, [competedIn]);
 
 	return (
-		<>
-			<Header />
-			<Main />
-			<Footer />
+		<div>
 
-			<h1>Fencers</h1>
-			<ul>
-				{fencers.map(fencer => (
-					<li key={fencer.memberID}>
-						{fencer.lastName}, {fencer.firstName}
-					</li>
-				))}
-			</ul>
+			<nav>
+				<Link to="/">
+					<button>Home</button>
+				</Link>
+				<Link to="/fencers">
+					<button>Fencers</button>
+				</Link>
+				<Link to="/events">
+					<button>Events</button>
+				</Link>
+			</nav>
 
-			<h1>Events</h1>
-			<ul>
-				{events.map(event => (
-					<li key = {event.eventID}>
-						{event.classification} {event.gender} {event.weapon}
-					</li>
-				))}
-			</ul>
-
-			<h1>Competed In</h1>
-			<ul>
-				{competedIn.map(competed => (
-					<li key = {`${competed.eventID}-${competed.memberID}`}>
-						{competed.firstName} fenced in {competed.classification} {competed.gender} {competed.weapon}
-					</li>
-				))}
-			</ul>
-		</>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/fencers" element={<Fencers fencers = {fencers} events = {events} competedIn = {competedIn} />} />
+				<Route path="/events" element={<Events />} />
+			</Routes>
+		</div>
 	);
 };
+
+const App = () => (
+	<Router>
+		<AppRouter />
+	</Router>
+);
 
 export default App;
