@@ -5,7 +5,6 @@ function Events(props) {
 
 	return (
 		<div>
-			<Header />
 			<h1>Events</h1>
 			<Footer />
 		</div>

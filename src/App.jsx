@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Home from './components/Home';
 import Fencers from './components/Fencers';
 import Events from './components/Events';
+import AddNewFencerForm from './components/AddNewFencerForm';
 
 const AppRouter = () => {
 	const [fencers, setFencers] = useState([]);
@@ -42,23 +43,25 @@ const AppRouter = () => {
 
 	return (
 		<div>
-
-			<nav>
-				<Link to="/">
-					<button>Home</button>
-				</Link>
-				<Link to="/fencers">
-					<button>Fencers</button>
-				</Link>
-				<Link to="/events">
-					<button>Events</button>
-				</Link>
-			</nav>
+			{useLocation().pathname !== '/new-fencer-form' && (
+				<nav>
+					<Link to="/">
+						<button>Home</button>
+					</Link>
+					<Link to="/fencers">
+						<button>Fencers</button>
+					</Link>
+					<Link to="/events">
+						<button>Events</button>
+					</Link>
+				</nav>
+			)}
 
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/fencers" element={<Fencers fencers = {fencers} events = {events} competedIn = {competedIn} />} />
+				<Route path="/fencers" element={<Fencers fencers={fencers} events={events} competedIn={competedIn} />} />
 				<Route path="/events" element={<Events />} />
+				<Route path="/new-fencer-form" element={<AddNewFencerForm />} />
 			</Routes>
 		</div>
 	);
