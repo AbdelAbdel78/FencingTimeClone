@@ -64,7 +64,7 @@ function Fencers(props) {
 								{fencer.age}
 							</td>
 							<td>
-								{fencer.gender == 0 ? "F" : "M"}
+								{fencer.gender == 0 ? "M" : "F"}
 							</td>
 							<td>
 								{fencer.foilRating}

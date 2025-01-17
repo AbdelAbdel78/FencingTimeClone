@@ -25,7 +25,7 @@ const dbConfig = {
     },
 };
 
-// Get all rows from a table
+// Select all fencers
 app.get("/api/fencers", async (req, res) => {
     try {
         let pool = await sql.connect(dbConfig);

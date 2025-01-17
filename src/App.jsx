@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Home from './components/Home';
+import Header from './components/Header';
 import Fencers from './components/Fencers';
 import Events from './components/Events';
 import AddNewFencerForm from './components/AddNewFencerForm';
+import AddNewEventForm from './components/AddNewEventForm';
 
 const AppRouter = () => {
 	const [fencers, setFencers] = useState([]);
@@ -43,7 +45,7 @@ const AppRouter = () => {
 
 	return (
 		<div>
-			{useLocation().pathname !== '/new-fencer-form' && (
+			{(useLocation().pathname !== '/new-fencer-form' && useLocation().pathname !== '/new-event-form') && (
 				<nav>
 					<Link to="/">
 						<button>Home</button>
@@ -59,9 +61,10 @@ const AppRouter = () => {
 
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/fencers" element={<Fencers fencers={fencers} events={events} competedIn={competedIn} />} />
-				<Route path="/events" element={<Events />} />
+				<Route path="/fencers" element={<Fencers fencers={fencers} competedIn={competedIn} />} />
 				<Route path="/new-fencer-form" element={<AddNewFencerForm />} />
+				<Route path="/events" element={<Events events={events} />} />
+				<Route path="/new-event-form" element={<AddNewEventForm />} />
 			</Routes>
 		</div>
 	);
