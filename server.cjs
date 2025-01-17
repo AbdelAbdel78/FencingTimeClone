@@ -1,59 +1,59 @@
 const express = require("express");
-const mysql = require("mysql2");
+const sql = require("mssql");
+const bodyParser = require("body-parser");
 const cors = require("cors");
-var query;
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middleware
+app.use(bodyParser.json());
 app.use(cors());
-app.use(express.json());
 
-const db = mysql.createConnection({
-	host: "localhost", // MySQL host (or a remote server address)
-	user: "root", // Your MySQL username
-	password: "password", // Your MySQL password
-	database: "fencingtimeclone", // The database you created
+// Azure SQL Database Configuration
+const dbConfig = {
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    server: process.env.DB_SERVER,
+    database: process.env.DB_NAME,
+    options: {
+        encrypt: true, // Use encryption for Azure
+        trustServerCertificate: false,
+    },
+};
+
+// Get all rows from a table
+app.get("/api/fencers", async (req, res) => {
+    try {
+        let pool = await sql.connect(dbConfig);
+        let result = await pool.request().query("SELECT * FROM fencers");
+        res.json(result.recordset);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching data");
+    }
 });
 
-db.connect((err) => {
-	if (err) {
-		console.error("Error connecting to MySQL:", err);
-		return;
-	}
-	console.log("Connected to MySQL");
+// Insert a new user
+app.post("/api/users", async (req, res) => {
+    const { name, email } = req.body;
+    try {
+        let pool = await sql.connect(dbConfig);
+        await pool
+            .request()
+            .input("name", sql.NVarChar, name)
+            .input("email", sql.NVarChar, email)
+            .query("INSERT INTO Users (Name, Email) VALUES (@name, @email)");
+        res.send("User added successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error inserting data");
+    }
 });
 
-// Define a simple API to fetch users
-app.get("/api/fencers", (req, res) => {
-	query = "SELECT * FROM fencers";
-	db.query(query, (err, results) => {
-		if (err) {
-			return res.status(500).json({ error: err });
-		}
-		res.json(results);
-	});
-});
-
-app.get("/api/events", (req, res) => {
-	query = "SELECT * FROM events";
-	db.query(query, (err, results) => {
-		if (err) {
-			return res.status(500).json({ error: err });
-		}
-		res.json(results);
-	})
-});
-
-app.get("/api/competedin", (req, res) => {
-	query = "SELECT * FROM competedin, events, fencers WHERE competedin.eID = events.eventID AND competedin.mID = fencers.memberID";
-	db.query(query, (err, results) => {
-		if (err) {
-			return res.status(500).json({ error: err });
-		}
-		res.json(results);
-	})
-});
-
-const PORT = 5000;
 app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
