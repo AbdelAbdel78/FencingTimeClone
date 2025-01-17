@@ -37,6 +37,18 @@ app.get("/api/fencers", async (req, res) => {
     }
 });
 
+// Select all events
+app.get("/api/events", async (req, res) => {
+    try {
+        let pool = await sql.connect(dbConfig);
+        let result = await pool.request().query("SELECT * FROM events");
+        res.json(result.recordset);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching data");
+    }
+});
+
 // Insert a new user
 app.post("/api/users", async (req, res) => {
     const { name, email } = req.body;

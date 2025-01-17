@@ -21,17 +21,17 @@ const AppRouter = () => {
 			.catch(error => {
 				console.error('Error fetching data:', error.response || error.message);
 			});
-	}, []);
+	}, [fencers]);
 
-	// useEffect(() => {
-	// 	axios.get('http://localhost:5000/api/events')
-	// 		.then(response => {
-	// 			setEvents(response.data);
-	// 		})
-	// 		.catch(error => {
-	// 			console.error('Error fetching data:', error);
-	// 		})
-	// }, [events]);
+	useEffect(() => {
+		axios.get('http://localhost:5000/api/events')
+			.then(response => {
+				setEvents(response.data);
+			})
+			.catch(error => {
+				console.error('Error fetching data:', error);
+			})
+	}, [events]);
 
 	// useEffect(() => {
 	// 	axios.get('http://localhost:5000/api/competedin')
