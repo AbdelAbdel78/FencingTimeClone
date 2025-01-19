@@ -59,7 +59,7 @@ function Events(props) {
 								{event.name}
 							</td>
 							<td>
-								{event.capacity === null ? "None" : event.capacity}
+								{event.capacity === null ? "No Limit" : event.capacity}
 							</td>
 							<td>
 								{event.address}
