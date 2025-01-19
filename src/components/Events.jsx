@@ -59,17 +59,16 @@ function Events(props) {
 								{event.name}
 							</td>
 							<td>
-								{event.capacity}
+								{event.capacity === null ? "None" : event.capacity}
 							</td>
 							<td>
 								{event.address}
 							</td>
 							<td>
 								{new Date(event.eventDate).toDateString()}
-								{event.eventDate}
 							</td>
 							<td>
-								{event.startTime}
+								{new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
 							</td>
 							<td>
 								{event.weapon}
