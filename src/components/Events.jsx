@@ -65,10 +65,10 @@ function Events(props) {
 								{event.address}
 							</td>
 							<td>
-								{new Date(event.eventDate).toDateString()}
+								{new Date(event.startTime).toDateString()}
 							</td>
 							<td>
-								{new Date(event.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+								{new Date(event.startTime).toLocaleTimeString()}
 							</td>
 							<td>
 								{event.weapon}

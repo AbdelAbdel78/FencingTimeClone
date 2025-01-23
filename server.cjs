@@ -37,6 +37,46 @@ app.get("/api/fencers", async (req, res) => {
     }
 });
 
+// Add a new fencer
+app.post("/api/fencers", async (req, res) => {
+    const {
+        firstName,
+        lastName,
+        club,
+        gender,
+        birthdate,
+        foilRating,
+        epeeRating,
+        saberRating,
+    } = req.body;
+
+    const client = new Client(dbConfig);
+
+    try {
+        await client.connect();
+        await client.query(
+            `INSERT INTO fencers (first_name, last_name, club, gender, birthdate, foil_rating, epee_rating, saber_rating) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+            [
+                firstName,
+                lastName,
+                club,
+                gender,
+                birthdate,
+                foilRating,
+                epeeRating,
+                saberRating,
+            ]
+        );
+        res.status(201).send("Fencer added successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error adding fencer");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
 // Select all events
 app.get("/api/events", async (req, res) => {
     const client = new Client(dbConfig);

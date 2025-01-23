@@ -65,15 +65,15 @@ function Fencers(props) {
 				</thead>
 				<tbody>
 					{props.fencers.map(fencer => (
-						<tr key={fencer.memberID}>
+						<tr key={fencer.member_id}>
 							<td>
-								{fencer.memberID}
+								{fencer.member_id}
 							</td>
 							<td>
-								{fencer.firstName}
+								{fencer.first_name}
 							</td>
 							<td>
-								{fencer.lastName}
+								{fencer.last_name}
 							</td>
 							<td>
 								{fencer.club}
@@ -88,13 +88,13 @@ function Fencers(props) {
 								{new Date(fencer.birthdate).toLocaleDateString()} {/* Display birthdate */}
 							</td>
 							<td>
-								{fencer.foilRating}
+								{fencer.foil_rating}
 							</td>
 							<td>
-								{fencer.epeeRating}
+								{fencer.epee_rating}
 							</td>
 							<td>
-								{fencer.saberRating}
+								{fencer.saber_rating}
 							</td>
 						</tr>
 					))}
