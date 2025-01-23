@@ -7,6 +7,21 @@ function Fencers(props) {
 		window.open("/new-fencer-form", "_blank", "width=600,height=400");
 	};
 
+	const calculateAge = (birthdate) => {
+		const today = new Date();
+		const birthDate = new Date(birthdate);
+		let age = today.getFullYear() - birthDate.getFullYear();
+		const month = today.getMonth();
+		const day = today.getDate();
+	
+		// Adjust age if the birth date hasn't occurred yet this year
+		if (month < birthDate.getMonth() || (month === birthDate.getMonth() && day < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	};
+	
+
 	return (
 		<div>
 			<h1>Fencers</h1>
@@ -29,10 +44,13 @@ function Fencers(props) {
 							Club
 						</th>
 						<th>
+							Gender
+						</th>
+						<th>
 							Age
 						</th>
 						<th>
-							Gender
+							Birthdate
 						</th>
 						<th>
 							Foil Rating
@@ -61,10 +79,13 @@ function Fencers(props) {
 								{fencer.club}
 							</td>
 							<td>
-								{fencer.age}
+								{fencer.gender ? "M" : "F"}
 							</td>
 							<td>
-								{fencer.gender == 0 ? "M" : "F"}
+                				{calculateAge(fencer.birthdate)} {/* Calculate and display age */}
+							</td>
+							<td>
+								{new Date(fencer.birthdate).toLocaleDateString()} {/* Display birthdate */}
 							</td>
 							<td>
 								{fencer.foilRating}
