@@ -10,7 +10,7 @@ function Fencers(props) {
 	const calculateAge = (birthdate) => {
 		const today = new Date();
 		const birthDate = new Date(birthdate);
-		let age = today.getFullYear() - birthDate.getFullYear();
+		var age = today.getFullYear() - birthDate.getFullYear();
 		const month = today.getMonth();
 		const day = today.getDate();
 	

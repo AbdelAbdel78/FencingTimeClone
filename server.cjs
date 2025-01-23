@@ -38,19 +38,19 @@ app.get("/api/fencers", async (req, res) => {
 });
 
 // Select all events
-// app.get("/api/events", async (req, res) => {
-//     const client = new Client(dbConfig);
-//     try {
-//         await client.connect();
-//         const result = await client.query("SELECT * FROM events");
-//         res.json(result.rows); // PostgreSQL returns rows in `result.rows`
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send("Error fetching data");
-//     } finally {
-//         await client.end(); // Close the connection
-//     }
-// });
+app.get("/api/events", async (req, res) => {
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const result = await client.query("SELECT * FROM events");
+        res.json(result.rows); // PostgreSQL returns rows in `result.rows`
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching data");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
