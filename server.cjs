@@ -13,12 +13,12 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(cors());
 
-// PostgreSQL Database Configuration
+// PostgreSQL Cloud SQL Database Configuration
 const dbConfig = {
-    user: process.env.DB_USER,      // Database user
-    host: process.env.DB_SERVER,    // Database server (e.g., localhost)
-    database: process.env.DB_NAME,  // Database name
-    password: process.env.DB_PASSWORD, // Database password
+    user: process.env.DB_USER,      // Your PostgreSQL username
+    host: '34.67.205.20', // Cloud SQL socket address
+    database: process.env.DB_NAME,  // Your database name
+    password: process.env.DB_PASSWORD, // Your database password
     port: 5432,                     // Default PostgreSQL port
 };
 
@@ -37,46 +37,6 @@ app.get("/api/fencers", async (req, res) => {
     }
 });
 
-// Add a new fencer
-app.post("/api/fencers", async (req, res) => {
-    const {
-        firstName,
-        lastName,
-        club,
-        gender,
-        birthdate,
-        foilRating,
-        epeeRating,
-        saberRating,
-    } = req.body;
-
-    const client = new Client(dbConfig);
-
-    try {
-        await client.connect();
-        await client.query(
-            `INSERT INTO fencers (first_name, last_name, club, gender, birthdate, foil_rating, epee_rating, saber_rating) 
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-            [
-                firstName,
-                lastName,
-                club,
-                gender,
-                birthdate,
-                foilRating,
-                epeeRating,
-                saberRating,
-            ]
-        );
-        res.status(201).send("Fencer added successfully");
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Error adding fencer");
-    } finally {
-        await client.end(); // Close the connection
-    }
-});
-
 // Select all events
 app.get("/api/events", async (req, res) => {
     const client = new Client(dbConfig);
@@ -87,6 +47,26 @@ app.get("/api/events", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send("Error fetching data");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
+// Insert a new fencer
+app.post("/api/fencers", async (req, res) => {
+    const { firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating } = req.body;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `
+            INSERT INTO fencers (first_name, last_name, club, gender, birthdate, foil_rating, epee_rating, saber_rating)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        `;
+        await client.query(query, [firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating]);
+        res.send("Fencer added successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error inserting data");
     } finally {
         await client.end(); // Close the connection
     }
