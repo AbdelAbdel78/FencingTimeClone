@@ -45,7 +45,8 @@ const AppRouter = () => {
 
 	return (
 		<div>
-			{(useLocation().pathname !== '/new-fencer-form' && useLocation().pathname !== '/new-event-form') && (
+			{useLocation().pathname !== '/new-fencer-form' &&
+			 useLocation().pathname !== '/new-event-form' &&
 				<nav>
 					<Link to="/">
 						<button>Home</button>
@@ -57,7 +58,7 @@ const AppRouter = () => {
 						<button>Events</button>
 					</Link>
 				</nav>
-			)}
+			}
 
 			<Routes>
 				<Route path="/" element={<Home />} />

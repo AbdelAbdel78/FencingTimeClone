@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const AddNewFencerForm = () => {
+
     const [newFencer, setNewFencer] = useState({
         firstName: "",
         lastName: "",
@@ -15,8 +16,7 @@ const AddNewFencerForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setNewFencer({...newFencer, [name]: value,
-        });
+        setNewFencer(f => ({...f, [name]: value}));
     };
 
     const handleSubmit = async (e) => {
@@ -131,6 +131,8 @@ const AddNewFencerForm = () => {
             <br />
 
             <button type="submit">Add Fencer</button>
+
+            <br />{newFencer.firstName} {newFencer.lastName} {newFencer.club} {newFencer.gender} {newFencer.birthdate} {newFencer.foilRating} {newFencer.epeeRating} {newFencer.saberRating}
         </form>
     );
 };
