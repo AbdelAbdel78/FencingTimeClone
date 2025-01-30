@@ -37,6 +37,26 @@ app.get("/api/fencers", async (req, res) => {
     }
 });
 
+// Insert a new fencer
+app.post("/api/fencers", async (req, res) => {
+    const { firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating } = req.body;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `
+            INSERT INTO fencers ("firstName", "lastName", "club", "gender", "birthdate", "foilRating", "epeeRating", "saberRating")
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        `;
+        await client.query(query, [firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating]);
+        res.send("Fencer added successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error inserting data");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
 // Select all events
 app.get("/api/events", async (req, res) => {
     const client = new Client(dbConfig);
@@ -52,18 +72,18 @@ app.get("/api/events", async (req, res) => {
     }
 });
 
-// Insert a new fencer
-app.post("/api/fencers", async (req, res) => {
-    const { firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating } = req.body;
+// Insert a new event
+app.post("/api/events", async (req, res) => {
+    const { name, capacity, address, startTime, weapon, category, eventGender } = req.body;
     const client = new Client(dbConfig);
     try {
         await client.connect();
         const query = `
-            INSERT INTO fencers (first_name, last_name, club, gender, birthdate, foil_rating, epee_rating, saber_rating)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            INSERT INTO events ("name", "capacity", "address", "startTime", "weapon", "category", "eventGender")
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
         `;
-        await client.query(query, [firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating]);
-        res.send("Fencer added successfully");
+        await client.query(query, [name, capacity, address, startTime, weapon, category, eventGender]);
+        res.send("Event added successfully");
     } catch (err) {
         console.error(err);
         res.status(500).send("Error inserting data");

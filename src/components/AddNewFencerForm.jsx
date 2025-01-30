@@ -7,7 +7,7 @@ const AddNewFencerForm = () => {
         firstName: "",
         lastName: "",
         club: "",
-        gender: true,
+        gender: "",
         birthdate: "",
         foilRating: "",
         epeeRating: "",
@@ -50,7 +50,6 @@ const AddNewFencerForm = () => {
                 <input
                     type="text"
                     name="firstName"
-                    value={newFencer.firstName}
                     onChange={handleChange}
                     required
                 />
@@ -61,7 +60,6 @@ const AddNewFencerForm = () => {
                 <input
                     type="text"
                     name="lastName"
-                    value={newFencer.lastName}
                     onChange={handleChange}
                     required
                 />
@@ -72,7 +70,6 @@ const AddNewFencerForm = () => {
                 <input
                     type="text"
                     name="club"
-                    value={newFencer.club}
                     onChange={handleChange}
                 />
             </label>
@@ -81,8 +78,10 @@ const AddNewFencerForm = () => {
                 Gender:
                 <select
                     name="gender"
-                    value={newFencer.gender}
-                    onChange={handleChange}>
+                    defaultValue=""
+                    onChange={handleChange}
+                    required>
+                    <option value="" disabled>Choose Gender</option>
                     <option value={true}>Male</option>
                     <option value={false}>Female</option>
                 </select>
@@ -93,7 +92,6 @@ const AddNewFencerForm = () => {
                 <input
                     type="date"
                     name="birthdate"
-                    value={newFencer.birthdate}
                     onChange={handleChange}
                     required
                 />
@@ -104,7 +102,6 @@ const AddNewFencerForm = () => {
                 <input
                     type="text"
                     name="foilRating"
-                    value={newFencer.foilRating}
                     onChange={handleChange}
                 />
             </label>
@@ -114,7 +111,6 @@ const AddNewFencerForm = () => {
                 <input
                     type="text"
                     name="epeeRating"
-                    value={newFencer.epeeRating}
                     onChange={handleChange}
                 />
             </label>
@@ -124,7 +120,6 @@ const AddNewFencerForm = () => {
                 <input
                     type="text"
                     name="saberRating"
-                    value={newFencer.saberRating}
                     onChange={handleChange}
                 />
             </label>

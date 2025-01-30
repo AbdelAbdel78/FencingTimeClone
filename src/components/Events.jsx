@@ -30,7 +30,7 @@ function Events(props) {
 							Capacity
 						</th>
 						<th>
-							Location
+							Address
 						</th>
 						<th>
 							Date
