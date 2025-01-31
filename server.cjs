@@ -43,15 +43,29 @@ app.post("/api/fencers", async (req, res) => {
     const client = new Client(dbConfig);
     try {
         await client.connect();
-        const query = `
-            INSERT INTO fencers ("firstName", "lastName", "club", "gender", "birthdate", "foilRating", "epeeRating", "saberRating")
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-        `;
+        const query = `INSERT INTO fencers ("firstName", "lastName", "club", "gender", "birthdate", "foilRating", "epeeRating", "saberRating") VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
         await client.query(query, [firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating]);
         res.send("Fencer added successfully");
     } catch (err) {
         console.error(err);
         res.status(500).send("Error inserting data");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
+// Delete an existing fencer
+app.delete("/api/fencers/:memberID", async (req, res) => {
+    const { memberID } = req.params;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `DELETE FROM fencers WHERE "memberID" = $1`;
+        await client.query(query, [memberID]);
+        res.send("Fencer deleted successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error deleting fencer");
     } finally {
         await client.end(); // Close the connection
     }
@@ -87,6 +101,23 @@ app.post("/api/events", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send("Error inserting data");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
+// Delete an existing event
+app.delete("/api/events/:eventID", async (req, res) => {
+    const { eventID } = req.params;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `DELETE FROM events WHERE "eventID" = $1`;
+        await client.query(query, [eventID]);
+        res.send("Fencer deleted successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error deleting fencer");
     } finally {
         await client.end(); // Close the connection
     }

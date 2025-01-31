@@ -1,3 +1,4 @@
+import axios from "axios";
 import Header from "./Header"
 import Footer from "./Footer"
 import {calculateAge} from "./Utils";
@@ -6,6 +7,22 @@ function Fencers(props) {
 
 	const openAddNewFencerForm = () => {
 		window.open("/new-fencer-form", "_blank", "width=600,height=400");
+	};
+
+	const modifyFencer = () => {
+
+	};
+
+	const handleDeleteFencer = async (memberID) => {
+		if (!window.confirm("Are you sure you want to delete this fencer?")) return;
+
+		try {
+			await axios.delete(`http://localhost:5000/api/fencers/${memberID}`);
+			alert("Fencer deleted successfully!");
+		} catch (error) {
+			console.error("Error deleting fencer:", error);
+			alert("Failed to delete fencer. Please try again.");
+		}
 	};
 
 	return (
@@ -47,6 +64,9 @@ function Fencers(props) {
 						<th>
 							Saber Rating
 						</th>
+						<th>
+							Modify/Delete
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -81,6 +101,10 @@ function Fencers(props) {
 							</td>
 							<td>
 								{fencer.saberRating}
+							</td>
+							<td>
+								<button onClick={modifyFencer}>Modify</button>
+								<button onClick={() => handleDeleteFencer(fencer.memberID)}>Delete</button>
 							</td>
 						</tr>
 					))}

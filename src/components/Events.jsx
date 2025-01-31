@@ -1,3 +1,4 @@
+import axios from "axios";
 import Header from "./Header"
 import Footer from "./Footer"
 import { format } from 'date-fns';
@@ -9,6 +10,22 @@ function Events(props) {
 
 	const openAddNewEventForm = () => {
 		window.open("/new-event-form", "_blank", "width=600,height=400");
+	};
+
+	const modifyEvent = () => {
+
+	};
+
+	const handleDeleteEvent = async (eventID) => {
+		if (!window.confirm("Are you sure you want to delete this event?")) return;
+
+		try {
+			await axios.delete(`http://localhost:5000/api/events/${eventID}`);
+			alert("Event deleted successfully!");
+		} catch (error) {
+			console.error("Error deleting event:", error);
+			alert("Failed to delete event. Please try again.");
+		}
 	};
 
 	return (
@@ -47,6 +64,9 @@ function Events(props) {
 						<th>
 							Gender
 						</th>
+						<th>
+							Modify/Delete
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -78,6 +98,10 @@ function Events(props) {
 							</td>
 							<td>
 								{event.eventGender}
+							</td>
+							<td>
+								<button onClick={modifyEvent}>Modify</button>
+								<button onClick={() => handleDeleteEvent(event.eventID)}>Delete</button>
 							</td>
 						</tr>
 					))}
