@@ -5,7 +5,7 @@ const AddNewEventForm = () => {
 
     const [newEvent, setNewEvent] = useState({
         name: "",
-        capacity: 0,
+        capacity: null,
         address: "",
         startTime: "",
         weapon: "",
@@ -15,7 +15,7 @@ const AddNewEventForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setNewEvent(e => ({...e, [name]: value == 0 ? null : value}));
+        setNewEvent(e => ({...e, [name]: value == "0" ? null : value}));
     };
 
     const handleSubmit = async (e) => {
@@ -49,6 +49,7 @@ const AddNewEventForm = () => {
                 <input
                     type="text"
                     name="name"
+                    value={newEvent.name}
                     onChange={handleChange}
                     required
                 />
@@ -60,6 +61,7 @@ const AddNewEventForm = () => {
                     type="number"
                     name="capacity"
                     defaultValue={0}
+                    value={newEvent.capacity}
                     onChange={handleChange}
                     required
                     min={0}
@@ -73,6 +75,7 @@ const AddNewEventForm = () => {
                 <input
                     type="text"
                     name="address"
+                    value={newEvent.address}
                     onChange={handleChange}
                     required
                 />
@@ -83,6 +86,7 @@ const AddNewEventForm = () => {
                 <input
                     type="datetime-local"
                     name="startTime"
+                    value={newEvent.startTime}
                     onChange={handleChange}
                     required
                 />
@@ -93,6 +97,7 @@ const AddNewEventForm = () => {
                 <select
                     name="weapon"
                     defaultValue=""
+                    value={newEvent.weapon}
                     onChange={handleChange}
                     required>
                     <option value="" disabled>Choose Weapon</option>
@@ -107,6 +112,7 @@ const AddNewEventForm = () => {
                 <select
                     name="category"
                     defaultValue=""
+                    value={newEvent.category}
                     onChange={handleChange}
                     required>
                     <option value="" disabled>Choose Category</option>
@@ -130,6 +136,7 @@ const AddNewEventForm = () => {
                 <select
                     name="eventGender"
                     defaultValue=""
+                    value={newEvent.eventGender}
                     onChange={handleChange}
                     required>
                     <option value="" disabled>Choose Gender</option>
