@@ -15,7 +15,7 @@ const AddNewEventForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setNewEvent(e => ({...e, [name]: value == "0" ? null : value}));
+        setNewEvent(e => ({...e, [name]: (name == "capacity" && value == 0) ? null : value}));
     };
 
     const handleSubmit = async (e) => {
@@ -149,7 +149,7 @@ const AddNewEventForm = () => {
 
             <button type="submit">Add Event</button>
 
-            <br />{newEvent.name} {newEvent.capacity ? newEvent.capacity : "null"} {newEvent.address} {newEvent.startTime} {newEvent.weapon} {newEvent.category} {newEvent.eventGender}
+            <br />{newEvent.name} {newEvent.capacity != null ? newEvent.capacity : "null"} {newEvent.address} {newEvent.startTime} {newEvent.weapon} {newEvent.category} {newEvent.eventGender}
         </form>
     );
 }
