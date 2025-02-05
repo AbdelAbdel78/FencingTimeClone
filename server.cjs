@@ -16,7 +16,7 @@ app.use(cors());
 // PostgreSQL Cloud SQL Database Configuration
 const dbConfig = {
     user: process.env.DB_USER,      // Your PostgreSQL username
-    host: '34.67.205.20', // Cloud SQL socket address
+    host: process.env.DB_SERVER, // Cloud SQL socket address
     database: process.env.DB_NAME,  // Your database name
     password: process.env.DB_PASSWORD, // Your database password
     port: 5432,                     // Default PostgreSQL port
