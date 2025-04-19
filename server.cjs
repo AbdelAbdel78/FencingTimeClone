@@ -37,6 +37,26 @@ app.get("/api/fencers", async (req, res) => {
     }
 });
 
+// Get an existing fencer
+app.get("/api/fencers/:memberID", async (req, res) => {
+    const { memberID } = req.params;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `SELECT * FROM fencers WHERE "memberID" = $1`;
+        const result = await client.query(query, [memberID]);
+        if (result.rows.length === 0) {
+            return res.status(404).send("Fencer not found");
+        }
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching fencer");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
 // Insert a new fencer
 app.post("/api/fencers", async (req, res) => {
     const { firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating } = req.body;
@@ -49,6 +69,24 @@ app.post("/api/fencers", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send("Error inserting data");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
+// Edit a existing fencer
+app.put("/api/fencers/:memberID", async (req, res) => {
+    const { memberID } = req.params;
+    const { firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating } = req.body;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `UPDATE fencers SET "firstName" = $2, "lastName" = $3, "club" = $4, "gender" = $5, "birthdate" = $6, "foilRating" = $7, "epeeRating" = $8, "saberRating" = $9 WHERE "memberID" = $1`;
+        await client.query(query, [memberID, firstName, lastName, club, gender, birthdate, foilRating, epeeRating, saberRating]);
+        res.send("Fencer edited successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error editing data");
     } finally {
         await client.end(); // Close the connection
     }

@@ -9,9 +9,9 @@ function Fencers(props) {
 		window.open("/new-fencer-form", "_blank", "width=600,height=400");
 	};
 
-	const modifyFencer = () => {
-
-	};
+	const openEditFencer = (memberID) => {
+		window.open(`/edit-fencer-form/${memberID}`, "_blank", "width=600,height=600");
+	};	
 
 	const handleDeleteFencer = async (memberID) => {
 		if (!window.confirm("Are you sure you want to delete this fencer?")) return;
@@ -103,7 +103,7 @@ function Fencers(props) {
 								{fencer.saberRating}
 							</td>
 							<td>
-								<button onClick={modifyFencer}>Modify</button>
+								<button onClick={() => openEditFencer(fencer.memberID)}>Edit</button>
 								<button onClick={() => handleDeleteFencer(fencer.memberID)}>Delete</button>
 							</td>
 						</tr>
