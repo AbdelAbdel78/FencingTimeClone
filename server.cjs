@@ -27,7 +27,7 @@ app.get("/api/fencers", async (req, res) => {
     const client = new Client(dbConfig);
     try {
         await client.connect();
-        const result = await client.query("SELECT * FROM fencers");
+        const result = await client.query(`SELECT * FROM fencers ORDER BY "lastName"`);
         res.json(result.rows); // PostgreSQL returns rows in `result.rows`
     } catch (err) {
         console.error(err);
@@ -114,7 +114,7 @@ app.get("/api/events", async (req, res) => {
     const client = new Client(dbConfig);
     try {
         await client.connect();
-        const result = await client.query("SELECT * FROM events");
+        const result = await client.query(`SELECT * FROM events ORDER BY "startTime"`);
         res.json(result.rows); // PostgreSQL returns rows in `result.rows`
     } catch (err) {
         console.error(err);
