@@ -20,6 +20,8 @@ const EditFencerForm = () => {
 
 	if (!editFencer) return <div>Loading...</div>;
 
+    const formattedBirthdate = new Date(editFencer.birthdate).toISOString().split("T")[0];
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setEditFencer((f) => ({ ...f, [name]: value }));
@@ -92,7 +94,7 @@ const EditFencerForm = () => {
                 <input
                     type="date"
                     name="birthdate"
-                    value={editFencer.birthdate}
+                    value={formattedBirthdate}
                     onChange={handleChange}
                     required
                 />
