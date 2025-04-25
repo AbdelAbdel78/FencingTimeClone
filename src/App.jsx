@@ -9,6 +9,7 @@ import AddNewFencerForm from './components/AddNewFencerForm';
 import AddNewEventForm from './components/AddNewEventForm';
 import EditFencerForm from './components/EditFencerForm';
 import EditEventForm from './components/EditEventForm';
+import EventDetails from './components/EventDetails';
 
 const AppRouter = () => {
 	const [fencers, setFencers] = useState([]);
@@ -69,8 +70,9 @@ const AppRouter = () => {
 				<Route path="/new-fencer-form" element={<AddNewFencerForm />} />
 				<Route path="/edit-fencer-form/:memberID" element={<EditFencerForm />} />
 				<Route path="/events" element={<Events events={events} />} />
-				<Route path="/edit-event-form/:eventID" element={<EditEventForm />} />
 				<Route path="/new-event-form" element={<AddNewEventForm />} />
+				<Route path="/edit-event-form/:eventID" element={<EditEventForm />} />
+				<Route path="/events/:eventID" element={<EventDetails />} />
 			</Routes>
 		</div>
 	);

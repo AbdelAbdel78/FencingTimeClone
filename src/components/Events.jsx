@@ -1,7 +1,7 @@
 import axios from "axios";
 import Header from "./Header"
 import Footer from "./Footer"
-import { format } from 'date-fns';
+import { useNavigate } from "react-router-dom";
 
 function Events(props) {
 
@@ -24,6 +24,11 @@ function Events(props) {
 			alert("Failed to delete event. Please try again.");
 		}
 	};
+
+	const navigate = useNavigate();
+	const handleRowClick = (eventID) => {
+		navigate(`${eventID}`);
+	}
 
 	return (
 		<div>
@@ -68,7 +73,11 @@ function Events(props) {
 				</thead>
 				<tbody>
 					{props.events.map(event => (
-						<tr key={event.eventID}>
+						<tr
+							key={event.eventID}
+							onClick={() => handleRowClick(event.eventID)}
+							style={{ cursor: "pointer" }}
+						>
 							<td>
 								{event.eventID}
 							</td>
@@ -96,7 +105,9 @@ function Events(props) {
 							<td>
 								{event.eventGender}
 							</td>
-							<td>
+							<td
+								onClick={(e) => e.stopPropagation()} // prevent row click
+							>
 								<button onClick={() => openEditEvent(event.eventID)}>Edit</button>
 								<button onClick={() => handleDeleteEvent(event.eventID)}>Delete</button>
 							</td>
