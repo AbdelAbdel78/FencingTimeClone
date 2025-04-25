@@ -124,6 +124,26 @@ app.get("/api/events", async (req, res) => {
     }
 });
 
+// Get an existing event
+app.get("/api/events/:eventID", async (req, res) => {
+    const { eventID } = req.params;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `SELECT * FROM events WHERE "eventID" = $1`;
+        const result = await client.query(query, [eventID]);
+        if (result.rows.length === 0) {
+            return res.status(404).send("Event not found");
+        }
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching event");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
 // Insert a new event
 app.post("/api/events", async (req, res) => {
     const { name, capacity, address, startTime, weapon, category, eventGender } = req.body;
@@ -139,6 +159,24 @@ app.post("/api/events", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send("Error inserting data");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
+// Edit a existing event
+app.put("/api/events/:eventID", async (req, res) => {
+    const { eventID } = req.params;
+    const { name, capacity, address, weapon, category, eventGender, startTime } = req.body;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `UPDATE events SET "name" = $2, "capacity" = $3, "address" = $4, "weapon" = $5, "category" = $6, "eventGender" = $7, "startTime" = $8 WHERE "eventID" = $1`;
+        await client.query(query, [eventID, name, capacity, address, weapon, category, eventGender, startTime]);
+        res.send("Event edited successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error editing data");
     } finally {
         await client.end(); // Close the connection
     }

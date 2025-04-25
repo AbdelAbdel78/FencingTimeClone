@@ -3,18 +3,15 @@ import Header from "./Header"
 import Footer from "./Footer"
 import { format } from 'date-fns';
 
-
-
-
 function Events(props) {
 
 	const openAddNewEventForm = () => {
 		window.open("/new-event-form", "_blank", "width=600,height=400");
 	};
 
-	const modifyEvent = () => {
-
-	};
+	const openEditEvent = (eventID) => {
+		window.open(`/edit-event-form/${eventID}`, "_blank", "width=600,height=600");
+	};	
 
 	const handleDeleteEvent = async (eventID) => {
 		if (!window.confirm("Are you sure you want to delete this event?")) return;
@@ -100,7 +97,7 @@ function Events(props) {
 								{event.eventGender}
 							</td>
 							<td>
-								<button onClick={modifyEvent}>Modify</button>
+								<button onClick={() => openEditEvent(event.eventID)}>Edit</button>
 								<button onClick={() => handleDeleteEvent(event.eventID)}>Delete</button>
 							</td>
 						</tr>

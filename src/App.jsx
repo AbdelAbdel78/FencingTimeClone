@@ -8,6 +8,7 @@ import Events from './components/Events';
 import AddNewFencerForm from './components/AddNewFencerForm';
 import AddNewEventForm from './components/AddNewEventForm';
 import EditFencerForm from './components/EditFencerForm';
+import EditEventForm from './components/EditEventForm';
 
 const AppRouter = () => {
 	const [fencers, setFencers] = useState([]);
@@ -48,7 +49,7 @@ const AppRouter = () => {
 
 	return (
 		<div>
-			{webPageName !== '/new-fencer-form' && webPageName !== '/new-event-form' && !webPageName.startsWith("/edit-fencer-form") &&
+			{!webPageName.startsWith("/new") && !webPageName.startsWith("/edit") &&
 				<nav>
 					<Link to="/">
 						<button>Home</button>
@@ -68,6 +69,7 @@ const AppRouter = () => {
 				<Route path="/new-fencer-form" element={<AddNewFencerForm />} />
 				<Route path="/edit-fencer-form/:memberID" element={<EditFencerForm />} />
 				<Route path="/events" element={<Events events={events} />} />
+				<Route path="/edit-event-form/:eventID" element={<EditEventForm />} />
 				<Route path="/new-event-form" element={<AddNewEventForm />} />
 			</Routes>
 		</div>
