@@ -199,6 +199,39 @@ app.delete("/api/events/:eventID", async (req, res) => {
     }
 });
 
+// Select all event_fencers
+app.get("/api/event_fencers", async (req, res) => {
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const result = await client.query(`SELECT * FROM event_fencers ORDER BY "eventID"`);
+        res.json(result.rows); // PostgreSQL returns rows in `result.rows`
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching data");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
+// Get an existing event's fencers
+app.get("/api/event_fencers/:eventID", async (req, res) => {
+    const { eventID } = req.params;
+    const client = new Client(dbConfig);
+
+    try {
+        await client.connect();
+        const query = `SELECT * FROM event_fencers ef JOIN fencers f ON ef."memberID" = f."memberID" WHERE ef."eventID" = $1`;
+        const result = await client.query(query, [eventID]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching event fencers");
+    } finally {
+        await client.end();
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

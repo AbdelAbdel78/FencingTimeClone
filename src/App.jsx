@@ -9,12 +9,11 @@ import AddNewFencerForm from './components/AddNewFencerForm';
 import AddNewEventForm from './components/AddNewEventForm';
 import EditFencerForm from './components/EditFencerForm';
 import EditEventForm from './components/EditEventForm';
-import EventDetails from './components/EventDetails';
+import EventDetails from './components/EventDetails'; 
 
 const AppRouter = () => {
 	const [fencers, setFencers] = useState([]);
 	const [events, setEvents] = useState([]);
-	const [competedIn, setCompetedIn] = useState([]);
 
 	useEffect(() => {
 		axios.get('http://localhost:5000/api/fencers')
@@ -36,16 +35,6 @@ const AppRouter = () => {
 			})
 	}, [events]);
 
-	// useEffect(() => {
-	// 	axios.get('http://localhost:5000/api/competedin')
-	// 		.then(response => {
-	// 			setCompetedIn(response.data);
-	// 		})
-	// 		.catch(error => {
-	// 			console.error('Error fetching data:', error);
-	// 		})
-	// }, [competedIn]);
-
 	const webPageName = useLocation().pathname;
 
 	return (
@@ -66,7 +55,7 @@ const AppRouter = () => {
 
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/fencers" element={<Fencers fencers={fencers} competedIn={competedIn} />} />
+				<Route path="/fencers" element={<Fencers fencers={fencers} />} />
 				<Route path="/new-fencer-form" element={<AddNewFencerForm />} />
 				<Route path="/edit-fencer-form/:memberID" element={<EditFencerForm />} />
 				<Route path="/events" element={<Events events={events} />} />
