@@ -13,3 +13,9 @@ export const calculateAge = (birthdate) => {
     }
     return age;
 };
+
+export const getRating = (event, fencer) => {
+    if (event.weapon === "Foil") return fencer.foilRating;
+    if (event.weapon === "Epee") return fencer.epeeRating;
+    return fencer.saberRating;
+};

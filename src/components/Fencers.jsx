@@ -81,7 +81,7 @@ function Fencers(props) {
 							<td>
 								{fencer.lastName}
 							</td>
-							<td>Each
+							<td>
 								{fencer.club}
 							</td>
 							<td>

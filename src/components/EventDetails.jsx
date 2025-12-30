@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
+import Fencers from "./Fencers"
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {getRating} from "./Utils";
 
 const EventDetails = () => {
     const { eventID } = useParams();
@@ -47,14 +49,51 @@ const EventDetails = () => {
             {eventFencers.length === 0 ? (
                 <p>No fencers registered yet.</p>
             ) : (
-                <ul>
-                    {eventFencers.map((fencer) => (
-                        <li key={fencer.memberID}>
-                            Member #{fencer.memberID}
-                        </li>
-                    ))}
-                </ul>
+                <table>
+				<thead>
+					<tr>
+						<th>
+							Seeding
+						</th>
+						<th>
+							First Name
+						</th>
+						<th>
+							Last Name
+						</th>
+						<th>
+							Club
+						</th>
+						<th>
+							Rating
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{eventFencers.map(fencer => (
+						<tr key={fencer.memberID}>
+							<td>
+								{fencer.seed}
+							</td>
+                            <td>
+                                {fencer.firstName}
+                            </td>
+                            <td>
+                                {fencer.lastName}
+                            </td>
+                            <td>
+                                {fencer.club}
+                            </td>
+                            <td>
+                                {getRating(event, fencer)}
+                            </td>
+						</tr>
+					))}
+				</tbody>
+			</table>
             )}
+
+            {/* <Fencers fencers={eventFencers}/> */}
         </div>
     );
 };

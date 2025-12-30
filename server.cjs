@@ -221,7 +221,7 @@ app.get("/api/event_fencers/:eventID", async (req, res) => {
 
     try {
         await client.connect();
-        const query = `SELECT * FROM event_fencers ef JOIN fencers f ON ef."memberID" = f."memberID" WHERE ef."eventID" = $1`;
+        const query = `SELECT * FROM event_fencers JOIN fencers ON event_fencers."memberID" = fencers."memberID" WHERE event_fencers."eventID" = $1`;
         const result = await client.query(query, [eventID]);
         res.json(result.rows);
     } catch (err) {
