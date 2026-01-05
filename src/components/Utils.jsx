@@ -3,7 +3,7 @@
 export const calculateAge = (birthdate) => {
     const today = new Date();
     const birthDate = new Date(birthdate);
-    var age = today.getFullYear() - birthDate.getFullYear();
+    let age = today.getFullYear() - birthDate.getFullYear();
     const month = today.getMonth();
     const day = today.getDate();
 

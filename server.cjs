@@ -232,6 +232,45 @@ app.get("/api/event_fencers/:eventID", async (req, res) => {
     }
 });
 
+// Get an existing pool
+app.get("/api/pools/:eventID", async (req, res) => {
+    const { eventID } = req.params;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `SELECT * FROM pools WHERE "eventID" = $1`;
+        const result = await client.query(query, [eventID]);
+        if (result.rows.length === 0) {
+            return res.status(404).send("Pool not found");
+        }
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching Pool");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
+// Get a pools bouts
+app.get("/api/pool_bouts/:poolID", async (req, res) => {
+    const { poolID } = req.params;
+    const client = new Client(dbConfig);
+    try {
+        await client.connect();
+        const query = `SELECT * FROM pool_bouts WHERE "poolID" = $1`;
+
+        const result = await client.query(query, [poolID]);
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching bouts");
+    } finally {
+        await client.end(); // Close the connection
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
