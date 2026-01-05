@@ -3,13 +3,13 @@ import Fencers from "./Fencers"
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {getRating} from "./Utils";
+import PoolCard from "./PoolCard";
 
 const EventDetails = () => {
     const { eventID } = useParams();
     const [event, setEvent] = useState(null);
     const [eventFencers, setEventFencers] = useState([]);
     const [eventPools, setEventPools] = useState([]);
-    const [poolBouts, setPoolBouts] = useState([]);
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -46,31 +46,6 @@ const EventDetails = () => {
 		};
 		fetchPools();
 	}, [eventID]);
-
-    useEffect(() => {
-        if (eventPools.length === 0) return;
-    
-        const fetchAllPoolBouts = async () => {
-            try {
-                const boutsByPool = {};
-    
-                await Promise.all(
-                    eventPools.map(async pool => {
-                        const res = await axios.get(
-                            `http://localhost:5000/api/pool_bouts/${pool.poolID}`
-                        );
-                        boutsByPool[pool.poolID] = res.data;
-                    })
-                );
-    
-                setPoolBouts(boutsByPool);
-            } catch (err) {
-                console.error("Error fetching pool bouts:", err);
-            }
-        };
-    
-        fetchAllPoolBouts();
-    }, [eventPools]);
 
 
     if (!event) return <p>Loading...</p>;
@@ -141,36 +116,7 @@ const EventDetails = () => {
             ) : (
                 eventPools.map(pool => (
                     <div key={pool.poolID}>
-                        <h3>Pool {pool.poolNumber}</h3>
-                        <p>Bouts: {poolBouts[pool.poolID]?.length ?? 0}</p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Bout ID</th>
-                                    <th>Fencer 1 ID</th>
-                                    <th>Fencer 2 ID</th>
-                                    <th>Fencer 1 Score</th>
-                                    <th>Fencer 2 Score</th>
-                                    <th>Winner</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {poolBouts[pool.poolID]?.map(bout => (
-                                    <tr key={bout.boutID}>
-                                        <td>{bout.boutID}</td>
-                                        <td>{bout.fencerA}</td>
-                                        <td>{bout.fencerB}</td>
-                                        <td>{bout.scoreA}</td>
-                                        <td>{bout.scoreB}</td>
-                                        <td>{bout.winner}</td>
-                                    </tr>
-                                )) || (
-                                    <tr>
-                                        <td colSpan="5">No bouts available for this pool.</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                        <PoolCard pool={pool} />
                     </div>
                 ))
             )}
