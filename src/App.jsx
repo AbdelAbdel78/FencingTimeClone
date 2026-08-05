@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link, useLocation } from 'react-router-dom';
+import { Analytics } from "@vercel/analytics/react"
 import axios from 'axios';
 import Home from './components/Home';
 import Header from './components/Header';
@@ -63,6 +64,8 @@ const AppRouter = () => {
 				<Route path="/edit-event-form/:eventID" element={<EditEventForm />} />
 				<Route path="/events/:eventID" element={<EventDetails />} />
 			</Routes>
+
+			<Analytics />
 		</div>
 	);
 };
