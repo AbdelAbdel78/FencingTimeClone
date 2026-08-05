@@ -9,7 +9,7 @@ const EditFencerForm = () => {
 	useEffect(() => {
 		const fetchFencer = async () => {
 			try {
-				const response = await axios.get(`http://localhost:5000/api/fencers/${memberID}`);
+				const response = await axios.get(`/api/fencers/${memberID}`);
 				setEditFencer(response.data);
 			} catch (err) {
 				console.error("Error fetching fencer:", err);
@@ -32,7 +32,7 @@ const EditFencerForm = () => {
 
         try {
             // Send data to the backend
-            await axios.put(`http://localhost:5000/api/fencers/${editFencer.memberID}`, editFencer);
+            await axios.put(`/api/fencers/${editFencer.memberID}`, editFencer);
             alert("Fencer edited successfully!");
         } catch (error) {
             console.error("Error editing fencer:", error);

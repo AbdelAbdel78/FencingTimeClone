@@ -18,7 +18,7 @@ const AppRouter = () => {
 	const [events, setEvents] = useState([]);
 
 	useEffect(() => {
-		axios.get('http://localhost:5000/api/fencers')
+		axios.get('/api/fencers')
 			.then(response => {
 				setFencers(response.data);
 			})

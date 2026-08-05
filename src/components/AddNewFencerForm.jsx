@@ -24,7 +24,7 @@ const AddNewFencerForm = () => {
 
         try {
             // Send data to the backend
-            await axios.post("http://localhost:5000/api/fencers", newFencer);
+            await axios.post("/api/fencers", newFencer);
             alert("Fencer added successfully!");
             setNewFencer({
                 firstName: "",

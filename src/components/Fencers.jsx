@@ -17,7 +17,7 @@ function Fencers(props) {
 		if (!window.confirm("Are you sure you want to delete this fencer?")) return;
 
 		try {
-			await axios.delete(`http://localhost:5000/api/fencers/${memberID}`);
+			await axios.delete(`/api/fencers/${memberID}`);
 			alert("Fencer deleted successfully!");
 		} catch (error) {
 			console.error("Error deleting fencer:", error);
