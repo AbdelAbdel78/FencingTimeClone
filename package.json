@@ -1,5 +1,5 @@
 {
-  "name": "fencing-time-clone",
+  "name": "fencing-time",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -40,13 +40,13 @@
   "main": "eslint.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AbdelAbdel78/FencingTimeClone.git"
+    "url": "git+https://github.com/AbdelAbdel78/FencingTime.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AbdelAbdel78/FencingTimeClone/issues"
+    "url": "https://github.com/AbdelAbdel78/FencingTime/issues"
   },
-  "homepage": "https://github.com/AbdelAbdel78/FencingTimeClone#readme"
+  "homepage": "https://github.com/AbdelAbdel78/FencingTime#readme"
 }
