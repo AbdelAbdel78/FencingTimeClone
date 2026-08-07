@@ -23,7 +23,7 @@ const AddNewEventForm = () => {
 
         try {
             // Send data to the backend
-            await axios.post("http://localhost:5000/api/events", newEvent);
+            await axios.post("/api/events", newEvent);
             alert("Event added successfully!");
             setNewEvent({
                 name: "",

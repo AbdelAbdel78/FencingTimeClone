@@ -10,7 +10,7 @@ const PoolCard = ({ pool }) => {
         const fetchPoolBouts = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/api/pool_bouts/${pool.poolID}`
+                    `/api/pool_bouts/${pool.poolID}`
                 );
                 setPoolBouts(res.data); // res.data is already an array
             } catch (err) {

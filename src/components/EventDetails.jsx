@@ -14,7 +14,7 @@ const EventDetails = () => {
     useEffect(() => {
         const fetchEvent = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/events/${eventID}`);
+                const res = await axios.get(`/api/events/${eventID}`);
                 setEvent(res.data);
             } catch (err) {
                 console.error("Error fetching event:", err);
@@ -26,7 +26,7 @@ const EventDetails = () => {
     useEffect(() => {
 		const fetchRegistrations = async () => {
 			try {
-				const response = await axios.get(`http://localhost:5000/api/event_fencers/${eventID}`);
+				const response = await axios.get(`/api/event_fencers/${eventID}`);
 				setEventFencers(response.data);
 			} catch (err) {
 				console.error("Error fetching event fencers:", err);
@@ -38,7 +38,7 @@ const EventDetails = () => {
     useEffect(() => {
 		const fetchPools = async () => {
 			try {
-				const response = await axios.get(`http://localhost:5000/api/pools/${eventID}`);
+				const response = await axios.get(`/api/pools/${eventID}`);
 				setEventPools(response.data);
 			} catch (err) {
 				console.error("Error fetching pools:", err);

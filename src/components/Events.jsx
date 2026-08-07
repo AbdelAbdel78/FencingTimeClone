@@ -17,7 +17,7 @@ function Events(props) {
 		if (!window.confirm("Are you sure you want to delete this event?")) return;
 
 		try {
-			await axios.delete(`http://localhost:5000/api/events/${eventID}`);
+			await axios.delete(`/api/events/${eventID}`);
 			alert("Event deleted successfully!");
 		} catch (error) {
 			console.error("Error deleting event:", error);

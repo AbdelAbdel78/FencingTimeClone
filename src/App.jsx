@@ -30,7 +30,7 @@ const AppRouter = () => {
 	}, [fencers]);
 
 	useEffect(() => {
-		axios.get('http://localhost:5000/api/events')
+		axios.get('/api/events')
 			.then(response => {
 				setEvents(response.data);
 			})
