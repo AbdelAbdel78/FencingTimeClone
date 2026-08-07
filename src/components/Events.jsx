@@ -116,7 +116,6 @@ function Events(props) {
 				</tbody>
 			</table>
 
-			<Footer />
 		</div>
 	)
 }

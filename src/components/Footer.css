@@ -1,0 +1,35 @@
+.footer {
+    margin-top: auto;
+    padding: 1.5rem 1.5rem 0rem
+}
+  
+.footer-divider {
+    height: 1px;
+    background-color: #ddd;
+    margin-bottom: 1rem;
+}
+  
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #666;
+}
+  
+.footer-link {
+    color: #666;
+    text-decoration: none;
+}
+  
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.footer-link {
+    color: #666;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }

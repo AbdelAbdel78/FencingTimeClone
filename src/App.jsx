@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link, useLocation } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react"
@@ -5,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 import axios from 'axios';
 import Home from './components/Home';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Fencers from './components/Fencers';
 import Events from './components/Events';
 import AddNewFencerForm from './components/AddNewFencerForm';
@@ -40,31 +42,35 @@ const AppRouter = () => {
 	const webPageName = useLocation().pathname;
 
 	return (
-		<div>
-			{!webPageName.startsWith("/new") && !webPageName.startsWith("/edit") &&
-				<nav>
-					<Link to="/">
-						<button>Home</button>
-					</Link>
-					<Link to="/fencers">
-						<button>Fencers</button>
-					</Link>
-					<Link to="/events">
-						<button>Events</button>
-					</Link>
-				</nav>
-			}
+		<div className="app-shell">
+			<div className="app-content">
+				{!webPageName.startsWith("/new") && !webPageName.startsWith("/edit") &&
+					<nav>
+						<Link to="/">
+							<button>Home</button>
+						</Link>
+						<Link to="/fencers">
+							<button>Fencers</button>
+						</Link>
+						<Link to="/events">
+							<button>Events</button>
+						</Link>
+					</nav>
+				}
 
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/fencers" element={<Fencers fencers={fencers} />} />
-				<Route path="/new-fencer-form" element={<AddNewFencerForm />} />
-				<Route path="/edit-fencer-form/:memberID" element={<EditFencerForm />} />
-				<Route path="/events" element={<Events events={events} />} />
-				<Route path="/new-event-form" element={<AddNewEventForm />} />
-				<Route path="/edit-event-form/:eventID" element={<EditEventForm />} />
-				<Route path="/events/:eventID" element={<EventDetails />} />
-			</Routes>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/fencers" element={<Fencers fencers={fencers} />} />
+					<Route path="/new-fencer-form" element={<AddNewFencerForm />} />
+					<Route path="/edit-fencer-form/:memberID" element={<EditFencerForm />} />
+					<Route path="/events" element={<Events events={events} />} />
+					<Route path="/new-event-form" element={<AddNewEventForm />} />
+					<Route path="/edit-event-form/:eventID" element={<EditEventForm />} />
+					<Route path="/events/:eventID" element={<EventDetails />} />
+				</Routes>
+			</div>
+
+			{!webPageName.startsWith("/new") && !webPageName.startsWith("/edit") && <Footer />}
 
 			<Analytics />
 			<SpeedInsights />

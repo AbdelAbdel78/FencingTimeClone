@@ -111,7 +111,6 @@ function Fencers(props) {
 				</tbody>
 			</table>
 
-			<Footer />
 		</div>
 	)
 }
