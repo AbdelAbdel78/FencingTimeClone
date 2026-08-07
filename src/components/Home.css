@@ -1,0 +1,25 @@
+.home {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	padding: 3rem 1rem;
+}
+
+.home-subtitle {
+	max-width: 500px;
+	color: #555;
+	margin: 1rem 0 2rem;
+	line-height: 1.5;
+}
+
+.home-links {
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+.home-note {
+	font-size: 0.85rem;
+	color: #888;
+}
